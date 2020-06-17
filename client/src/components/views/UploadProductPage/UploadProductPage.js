@@ -39,8 +39,8 @@ function UploadProductPage(){
         setKind(event.currentTarget.value)
     }
 
-    const imageChangeHandler = (event) =>{
-        setImages(event.currentTarget.value)
+    const updateImages = (newImages) =>{
+        setImages(newImages)
     }
 
 
@@ -55,7 +55,9 @@ function UploadProductPage(){
 
               {}
 
-              <FileUpload></FileUpload>
+              <FileUpload refreshFunction={updateImages}>
+
+              </FileUpload>
               <br/>
               <br/>
               <label>이름</label>
