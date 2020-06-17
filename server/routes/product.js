@@ -43,9 +43,14 @@ router.post('/', (req, res) =>{
 
  router.post('/products', (req, res) =>{
 
+    let limit = req.body.limit ? parseInt(req.body.limit) : 20; // req limit이 존재하는 경우, 아니면 20개
+    let skip = req.body.skip ? parseInt(req.body.skip) : 0; // req skip이 존재하는 경우, 아니면 0부터
+
     // product에 들어있는 모든 상품정보 가져오기
     Product.find()
     .populate("writer")
+    .skip(skip)
+    .limit(limit)
     .exec((err, productInfo) =>{
         if(err) return res.status(400).json({success: false, err})
         return res.status(200).json({success: true, productInfo})

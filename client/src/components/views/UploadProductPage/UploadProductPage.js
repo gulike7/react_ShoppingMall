@@ -11,7 +11,8 @@ const Kinds =[
     {key:4, value:"염색제"},
     {key:5, value:"크림"},
     {key:6, value:"트리트먼트"},
-    {key:7, value:"픽서"}
+    {key:7, value:"화장품"},
+    {key:8, value:"픽서"}
 ]
 
 function UploadProductPage(props){

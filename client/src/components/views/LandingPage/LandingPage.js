@@ -7,10 +7,15 @@ import ImageSlider from '../../utils/ImageSlider';
 function LandingPage() {
    
     const[Products, setProducts] = useState([])
-
+    const[Skip, setSkip] = useState(0)
+    const[Limit, setLimit] = useState(8)    // 8개를 먼저 가져옴
+  
     useEffect(()=>{
-
-        axios.post('/api/product/products')
+        let body ={
+            skip: Skip,
+            limit: Limit
+        }
+        axios.post('/api/product/products',body)
             .then(response =>{
                 if(response.data.success){
                     setProducts(response.data.productInfo)
@@ -20,6 +25,10 @@ function LandingPage() {
             })
 
     },[])
+
+    const loadMoreHandler =()=>{
+      
+    }
 
     const renderCards = Products.map((product, index) =>{
 
@@ -38,16 +47,17 @@ function LandingPage() {
     return (
        <div style={{width: '75%', margin: '3rem auto'}}>
            <div style={{textAlign: 'center'}}>
-            <h2> <Icon type="crown"/> 당신이 원하는 미용 용품을 선택하세요 <Icon type="crown"/></h2>
+            <h2 style={{fontFamily:'bold italic large Palatino, serif'}}> <Icon type="crown"/>  KW Beauty Shop  <Icon type="crown"/></h2>
+            <br/>
             </div>
             {}
             {}
             <Row gutter = {[16,16]}>
                 {renderCards}
             </Row>
-
+            <br/>
             <div style={{ display:'flex', justifyContent: 'center'}}>
-                <button>더보기</button>
+                <button onClick={loadMoreHandler}>더보기</button>
             </div>
 
 
