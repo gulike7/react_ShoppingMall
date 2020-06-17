@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Typography, Button, Form, Input} from 'antd';
 import FileUpload from '../../utils/FileUpload'
+import Axios from 'axios';
 const{ TextArea } = Input;
 
 const Kinds =[
@@ -13,7 +14,7 @@ const Kinds =[
     {key:7, value:"픽서"}
 ]
 
-function UploadProductPage(){
+function UploadProductPage(props){
     
     const[Title, setTitle] = useState("")
     const[Description, setDescription] = useState("")
@@ -43,6 +44,33 @@ function UploadProductPage(){
         setImages(newImages)
     }
 
+    const submitHandler =(event) =>{
+
+        event.preventDefault();
+        if(!Title || !Description || !Price || !Kind || !Images){
+            return alert("모든 값을 넣어주셔야 합니다!")        // 유효성 체크
+        }
+
+        //server에 채운 값을  request로 보냄.
+        const body={
+            // login된 사람의 ID
+            writer: props.user.userData._id,
+            title: Title,
+            description: Description,
+            price : Price,
+            images : Images,
+            kinds: Kind
+        }
+        Axios.post("/api/product",body)
+        .then(response =>{
+            if(response.data.success){
+                alert('상품 업로드에 성공했습니다!')
+                props.history.push('/')
+            } else{
+                alert('상품 업로드에 실패했습니다!')
+            }
+        })
+    }
 
     return(
         <div style={{maxWidth: '700px', margin: '2rem auto'}}>
@@ -51,7 +79,7 @@ function UploadProductPage(){
                  
             </div>
            
-            <Form>
+            <Form onSubmit={submitHandler}>
 
               {}
 
@@ -80,8 +108,8 @@ function UploadProductPage(){
               </select>
               <br/>
               <br/>
-              <Button>
-                  확인
+              <Button type="submit" onClick={submitHandler}>
+                  Submit
               </Button>
              
               
