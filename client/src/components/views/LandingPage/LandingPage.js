@@ -13,6 +13,10 @@ function LandingPage() {
     const[Skip, setSkip] = useState(0)
     const[Limit, setLimit] = useState(8)    // 8개를 먼저 가져옴
     const[PostSize, setPostSize] = useState(0)
+    const[Filters, setFilters] = useState({
+        kinds: [],
+        price: []
+    })
     useEffect(()=>{
         let body ={
             skip: Skip,
@@ -65,6 +69,23 @@ function LandingPage() {
             </Card>
         </Col>
     })
+    const showFilteredResults = (filters) =>{
+        let body ={
+            skip:0,
+            limit:Limit,
+            filters: filters
+        }
+        getProducts(body)
+        setSkip(0)
+    }
+    const handleFilters = (filters, category) =>{
+        const newFilters = {...Filters}
+
+        newFilters[category] = filters
+        showFilteredResults(newFilters)
+    }
+
+
     return (
        <div style={{width: '75%', margin: '3rem auto'}}>
            <div style={{textAlign: 'center'}}>
@@ -73,7 +94,7 @@ function LandingPage() {
             </div>
             {}
 
-            <Checkbox list ={kinds}/>
+            <Checkbox list ={kinds} handleFilters={filters => handleFilters(filters, "kinds")}/>
             {}
             <Row gutter = {[16,16]}>
                 {renderCards}
@@ -85,9 +106,7 @@ function LandingPage() {
              <button onClick={loadMoreHandler}>더보기</button>
          </div>
             }
-           
-
-
+      
        </div>
 
        
