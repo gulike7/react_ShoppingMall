@@ -79,11 +79,33 @@ function LandingPage() {
         getProducts(body)
         setSkip(0)
     }
+
+    const handlePrice = (value)=>{
+        const data = price;
+        let array =[];
+
+        for (let key in data){
+
+            if(data[key]._id === parseInt(value,10)){
+                array = data[key].array;
+            }
+        }
+        return array;
+    }
+
+
     const handleFilters = (filters, category) =>{
         const newFilters = {...Filters}
-
         newFilters[category] = filters
+       
+
+        if(category ==="price"){
+            let priceValues = handlePrice(filters)
+            newFilters[category] = priceValues
+        }
+        
         showFilteredResults(newFilters)
+        setFilters(newFilters)
     }
 
 
