@@ -5,7 +5,8 @@ import {Icon, Col, Card, Row, Carousel} from 'antd';
 import Meta from 'antd/lib/card/Meta';
 import ImageSlider from '../../utils/ImageSlider';
 import Checkbox from './Sections/CheckBox'
-import { kinds } from './Sections/Datas'
+import Radiobox from './Sections/RadioBox'
+import { kinds, price } from './Sections/Datas'
 
 function LandingPage() {
    
@@ -93,8 +94,16 @@ function LandingPage() {
             <br/>
             </div>
             {}
+            <Row gutter={[16,16]}>
 
-            <Checkbox list ={kinds} handleFilters={filters => handleFilters(filters, "kinds")}/>
+                <Col lg={12} xs={24}>
+                    <Checkbox list={kinds} handleFilters={filters => handleFilters(filters, "kinds")} />
+                </Col>
+                <Col lg={12} xs={24}>
+                <Radiobox list={price} handleFilters={filters => handleFilters(filters, "price")} />
+                
+                </Col>                    
+            </Row>
             {}
             <Row gutter = {[16,16]}>
                 {renderCards}
